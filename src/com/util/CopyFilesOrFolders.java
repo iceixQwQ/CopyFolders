@@ -51,19 +51,17 @@ public class CopyFilesOrFolders {
         //创建输入输出流
         FileInputStream fs = new FileInputStream(src);
         FileOutputStream fo = new FileOutputStream(dest);
-        BufferedInputStream bi = new BufferedInputStream(fs);
-        BufferedOutputStream bo = new BufferedOutputStream(fo);
+
         //JDK9写法
-        try(bi; bo) {
+        try(fs; fo) {
             //复制
             byte[] buffer = new byte[8192];
             int len = 0;
-            while((len = bi.read(buffer)) != -1){
-                bo.write(buffer, 0, len);
+            while((len = fs.read(buffer)) != -1){
+                fo.write(buffer, 0, len);
             }
         }catch (IOException e){
             e.printStackTrace();
         }
-
     };
 }
