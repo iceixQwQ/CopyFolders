@@ -1,5 +1,6 @@
 package com.util;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class Test {
         String dest = in.next();
         try {
             CopyFilesOrFolders.copyFilesOrFolders(src, dest);
-        }catch (IOException e){
+        }catch (FileNotFoundException e){
             System.out.println("-----------路径有误-----------");
             e.printStackTrace();
         }catch (Exception e){

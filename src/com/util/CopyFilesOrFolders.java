@@ -10,13 +10,13 @@ import java.io.*;
  */
 
 public class CopyFilesOrFolders {
-    public static void copyFilesOrFolders(String src, String dest) throws IOException {
+    public static void copyFilesOrFolders(String src, String dest) throws FileNotFoundException {
         File srcFilesOrFolders = new File(src);
         File destFolders = new File(dest);
         copyFilesOrFolders(srcFilesOrFolders, destFolders);
     }
 
-    public static void copyFilesOrFolders(File srcFilesOrFolders, File destFolders) throws IOException {
+    public static void copyFilesOrFolders(File srcFilesOrFolders, File destFolders) throws FileNotFoundException {
 
         //如果目标路径不是文件夹则直接返回
         if(!destFolders.isDirectory()) return;
@@ -45,20 +45,23 @@ public class CopyFilesOrFolders {
         }
     }
 
-    private static void copyFiles(File src, File dest) throws IOException {
+    private static void copyFiles(File src, File dest) throws FileNotFoundException {
         //创建输入输出流
-        BufferedInputStream bi = new BufferedInputStream(new FileInputStream(src));
-        BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(dest));
-
-        //复制
-        byte[] buffer = new byte[8192];
-        int len = 0;
-        while((len = bi.read(buffer)) != -1){
-            bo.write(buffer, 0, len);
+        FileInputStream fs = new FileInputStream(src);
+        FileOutputStream fo = new FileOutputStream(dest);
+        BufferedInputStream bi = new BufferedInputStream(fs);
+        BufferedOutputStream bo = new BufferedOutputStream(fo);
+        //JDK9写法
+        try(bi; bo) {
+            //复制
+            byte[] buffer = new byte[8192];
+            int len = 0;
+            while((len = bi.read(buffer)) != -1){
+                bo.write(buffer, 0, len);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
         }
 
-        //释放资源
-        bi.close();
-        bo.close();
     };
 }
