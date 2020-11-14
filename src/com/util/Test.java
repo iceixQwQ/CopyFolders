@@ -10,6 +10,7 @@ import java.util.Scanner;
  * @Description: com.util
  * @Version: 1.0
  */
+
 public class Test {
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);

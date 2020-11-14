@@ -39,8 +39,10 @@ public class CopyFilesOrFolders {
             File[] filesOrFoldersArray = srcFilesOrFolders.listFiles();
 
             //递归调用进行复制
-            for (File file : filesOrFoldersArray) {
-                copyFilesOrFolders(file, newFolder);
+            if (filesOrFoldersArray != null) {
+                for (File file : filesOrFoldersArray) {
+                    copyFilesOrFolders(file, newFolder);
+                }
             }
         }
     }
